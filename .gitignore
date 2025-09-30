@@ -1,8 +1,16 @@
+# Project
+
+## Vite
+dist/
+
+## Svelte
+node_modules/
+
 # Operating Systems
 ## MacOS
 .DS_Store
 
-# Meta Data
+# IDE / Editor
 ## JetBrains
 .idea
 .iml

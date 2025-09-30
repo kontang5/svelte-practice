@@ -1,46 +1,38 @@
-# GitHub Template
+# Svelte Practice
 
 ## Features
 
-## Getting Started
+Svelte + Vite project for practicing Svelte.
 
 ## Project Structure
+
 ```
-PROJECT_ROOT
-├── SRC
-│   └── SOURCE_CODE
-└── DIRECTORY
+svelte-practice
+├── public/                 # Static assets
+├── src/                    # Application source
+│   ├── App.svelte          # Root Svelte component
+│   ├── app.css             # Global styles
+│   ├── main.ts             # Application entry point
+│   ├── assets/             # Project-specific assets
+│   └── lib/                # Reusable components & utilities
+│       └── SECTION         # Reusable components & utilities
+├── package.json            # Project metadata & scripts
+├── package-lock.json       # Dependency lockfile
+├── svelte.config.js        # Svelte configuration
+├── tsconfig.json           # Base TypeScript config
+├── tsconfig.app.json       # TS config for app source
+├── tsconfig.node.json      # TS config for tooling
+├── vite.config.ts          # Vite configuration
+└── index.html              # Entry HTML file
 ...
 ```
 
-## Project Guidelines
+## Guidelines
 
-### Naming Conventions
+### Commit Message
 
-### Testing
-
-### Documentation
-
-### Versioning
-
-## Repository Guidelines
-
-### Commit Message Prefix
-- `Feat`: New feature
-- `Fix`: Bug fix
-- `Docs`: Documentation update
-- `Refactor`: Code refactoring
-- `Test`: Unit tests
-- `Chore`: Other maintenance tasks
+- `MAIN SUBJECT`
 
 ### Branch Strategy
-- `main`: Stable releases
-- `feature/`: New feature implementation
 
-### Merge Strategy
-1. `feature` -> `main`
-	- Open a Pull Request to `main`
-	- Ensure code review and test passed
-	- Merge commit with signature
-
-
+- `SECTION`
