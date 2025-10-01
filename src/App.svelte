@@ -2,47 +2,56 @@
     // <script> block (optional)
     // Only available in this component
     // Apply TypeScript by adding the `lang="ts"` attribute
+
+    import Box from "./lib/Box.svelte";
     import Button from "./lib/Button.svelte";
-    import UserProfile from "./lib/UserProfile.svelte";
-    import PropsTest from "./lib/PropsTest.svelte";
-
-    let buttonLabel: string = "Subscribe";
-    let label: string = "Label";
-
-    let john = {
-        name: "John",
-        id: "john01",
-        bio: "svelter"
-    }
-
-    let props = {
-        label: "Submit",
-        disabled: true,
-    }
-
-    export let containerClass: string = "button-container";
+    import Card from "./lib/Card.svelte";
+    import List from "./lib/List.svelte";
 </script>
 
 <!-- HTML tags with svelte syntax -->
+<Box>
+    <h3>Svelte</h3>
+    <p>Svelte, the framework</p>
+    <!-- Use components -->
+    <Button label="Click me"/>
+    <!-- Use {# } blocks -->
+    {#if true}
+        <div>
+            <p>Svelte is awesome</p>
+        </div>
+    {/if}
+</Box>
 
-<!-- Transfer attributes to the component -->
-<Button label={buttonLabel}/>
-<Button {label}/>
-<Button label="Direct string"/>
+<Box/>
 
-<UserProfile user={john}/>
+<Card>
+    <div>
+        related content
+    </div>
+    <!-- Insert title slot -->
+    <h3 slot="title">Svelte</h3>
+    <!-- Insert body slot -->
+    <div slot="body">
+        <p>Svelte, the framework</p>
+    </div>
 
-<Button label={label} disabled={true}/>
-<Button {...props}/>
+    <svelte:fragment slot="footer">
+        <a href="https://svelte.dev">Learn more</a>
+    </svelte:fragment>
+</Card>
 
-<PropsTest foo="Test" bar={42}/>
+<List let:item={text}>
+    <div class="item">{text}</div>
+</List>
 
-<div class={containerClass}>
-    <Button {...$$props}/>
-    <Button {...$$restProps}/>
-</div>
-
+<List>
+    <span slot="frameworks" let:item={text}>{text}</span>
+</List>
 <style>
     /* <style> block (optional) */
     /* Only available in this component */
+    .item {
+        color: blue;
+    }
 </style>
