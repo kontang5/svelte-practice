@@ -2,11 +2,11 @@
     // <script> block (optional)
     // Only available in this component
     // Apply TypeScript by adding the `lang="ts"` attribute
-import Basic from "./lib/Basic.svelte";
+    import Style from "./lib/Style.svelte";
 </script>
 
 <!-- HTML tags with svelte syntax -->
-<Basic/>
+<Style/>
 
 <style>
     /* <style> block (optional) */
