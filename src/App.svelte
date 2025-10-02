@@ -2,56 +2,42 @@
     // <script> block (optional)
     // Only available in this component
     // Apply TypeScript by adding the `lang="ts"` attribute
+    import HelloButton from "./lib/HelloButton.svelte";
+    import CustomButton from "./lib/CustomButton.svelte";
 
-    import Box from "./lib/Box.svelte";
-    import Button from "./lib/Button.svelte";
-    import Card from "./lib/Card.svelte";
-    import List from "./lib/List.svelte";
+    function handleClick() {
+        alert("Clicked!");
+    }
+    function handleSubmit(event: Event) {
+        // event.preventDefault();
+        const formData = new FormData(event.target as HTMLFormElement);
+        alert(`form submitted: ${formData.get('key')}`);
+    }
+    function handleHello(event: CustomEvent<string>) {
+        alert("event.detail");
+    }
 </script>
 
 <!-- HTML tags with svelte syntax -->
-<Box>
-    <h3>Svelte</h3>
-    <p>Svelte, the framework</p>
-    <!-- Use components -->
-    <Button label="Click me"/>
-    <!-- Use {# } blocks -->
-    {#if true}
-        <div>
-            <p>Svelte is awesome</p>
-        </div>
-    {/if}
-</Box>
+<button on:click={handleClick}>Click me</button>
+<button on:click={() => alert("Clicked!")}>Click</button>
 
-<Box/>
+<form on:submit={handleSubmit}>
+    <input type="search" name="keyword" placeholder="Search..." />
+    <button type="submit">Search</button>
+</form>
 
-<Card>
-    <div>
-        related content
-    </div>
-    <!-- Insert title slot -->
-    <h3 slot="title">Svelte</h3>
-    <!-- Insert body slot -->
-    <div slot="body">
-        <p>Svelte, the framework</p>
-    </div>
+<a href="https://svelte.dev/tutorial" on:click|preventDefault={handleClick}>Svelte Tutorial</a>
 
-    <svelte:fragment slot="footer">
-        <a href="https://svelte.dev">Learn more</a>
-    </svelte:fragment>
-</Card>
+<div on:click|capture|stopPropagation={() => alert("div clicked")}>
+    <button on:click|preventDefault={handleClick}>click</button>
+</div>
 
-<List let:item={text}>
-    <div class="item">{text}</div>
-</List>
+<HelloButton on:hello={handleHello}/>
 
-<List>
-    <span slot="frameworks" let:item={text}>{text}</span>
-</List>
+<CustomButton on:click={handleClick}>Custom Button</CustomButton>
 <style>
     /* <style> block (optional) */
     /* Only available in this component */
-    .item {
-        color: blue;
-    }
+
 </style>
