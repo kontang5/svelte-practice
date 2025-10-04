@@ -1,57 +1,96 @@
 <script lang="ts">
-    let x: number = 1;
+    let todos: string[] = [];
 
-    $: square  = x * x;
-    $: cube = x * x * x;
+    function handleClick() {
+        // todos.push("new Task");
+        // todos = todos;
+        todos = [...todos, "new Task"];
+    }
 
-    let n = 1;
-    let stars: string[];
+    let range = {min: 0, max: 10};
+    let values: number[] = [];
 
-    $: console.log(`Change n to ${n}.`);
     $: {
-        const newStars = [];
-        for (let i = 0; i < n; i++) {
-            newStars.push(i %2 === 0 ? '*' : '');
+        const newValues = [];
+        for (let i = range.min; i <= range.max; i++) {
+            newValues.push(i);
         }
-        stars = newStars;
+        values = newValues;
     }
 
-    let m = 1;
-
-    $: if(m > 10) {
-        alert("Overloading! Reset to 10");
-        m = 10;
+    function handleMinChange(event) {
+        range.min = parseInt(event.target.value);
     }
 
+    function handleMaxChange(event) {
+        range.max = parseInt(event.target.value);
+    }
+
+    // Can't detect state changes
+    let setting1 = {volume: {value: 50},
+    };
+
+    function updateVolume(diff: number) {
+        const volume = setting1.volume;
+        // The left side doesn't have a variable `setting`.
+        volume.value += diff;
+    }
+
+    function handleReset() {
+        // passing variables as argument
+        resetVolume({args: setting1});
+    }
+
+    function resetVolume({args}: { args: any }) {
+        args.volume = {value: 50};
+    }
+
+    let setting2 = {
+        volume: {value: 50},
+    }
+
+    function updateVolume2(diff: number) {
+        // Directly referencing variable `setting2`
+        setting2.volume.value += diff;
+    }
+    function handleReset2() {
+        resetVolume2();
+    }
+    function resetVolume2() {
+        // Directly update variable `setting2`
+        setting2.volume = {value: 50};
+    }
 </script>
 
-<div>
-    length of side:
-    <button onclick={() => (x--)} disabled={x <= 1}>-</button>
-    {x} m
-    <button onclick={() => (x++)}>+</button>
-</div>
+<ul>
+    {#each todos as todo}
+        <li>{todo}</li>
+    {/each}
+</ul>
+<button on:click={handleClick}>Add Task</button>
 
 <div>
-    square: {square}m<sup>2</sup>
+    <input max={range.max} min={0} on:change={handleMinChange} type="number" value={range.min}>
+    <input max={100} min={range.min} on:change={handleMaxChange} type="number" value={range.max}>
 </div>
+{#each values as value}
+    <button>{value}</button>
+{/each}
+
 <div>
-    cube: {cube}m<sup>3</sup>
+    Volume: {setting1.volume.value}%
 </div>
+
+<button on:click={() => updateVolume(-10)}>Decrease</button>
+<button on:click={() => updateVolume(10)}>Increase</button>
+<button on:click={handleReset}>Reset</button>
 
 <hr>
-<div>
-    {#each stars as star}{star}{/each}
-</div>
-<div>
-    <button onclick={() => (n--)} disabled={n <= 1}>-</button>
-    <button onclick={() => (n++)}>+</button>
-</div>
 
 <div>
-    quantity: {m}
+    Volume: {setting2.volume.value}%
 </div>
-<div>
-    <button onclick={() => (m--)} disabled={m <= 1}>-</button>
-    <button onclick={() => (m++)}>+</button>
-</div>
+
+<button on:click={() => updateVolume2(-10)}>Decrease</button>
+<button on:click={() => updateVolume2(10)}>Increase</button>
+<button on:click={handleReset2}>Reset</button>
