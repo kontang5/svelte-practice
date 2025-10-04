@@ -15,7 +15,8 @@ svelte-practice
 │   ├── main.ts             # Application entry point
 │   ├── assets/             # Project-specific assets
 │   └── lib/                # Reusable components & utilities
-│       └── SECTION         # Reusable components & utilities
+│       ├── component       # Basic usage of components
+│       └── reactivity      # Sevelte reactivity
 ├── package.json            # Project metadata & scripts
 ├── package-lock.json       # Dependency lockfile
 ├── svelte.config.js        # Svelte configuration

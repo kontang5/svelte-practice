@@ -2,8 +2,8 @@
     // <script> block (optional)
     // Only available in this component
     // Apply TypeScript by adding the `lang="ts"` attribute
-    import HelloButton from "./lib/HelloButton.svelte";
-    import CustomButton from "./lib/CustomButton.svelte";
+    import HelloButton from "./lib/component/HelloButton.svelte";
+    import CustomButton from "./lib/component/CustomButton.svelte";
 
     function handleClick() {
         alert("Clicked!");
@@ -14,7 +14,7 @@
         alert(`form submitted: ${formData.get('key')}`);
     }
     function handleHello(event: CustomEvent<string>) {
-        alert("event.detail");
+        alert(event.detail);
     }
 </script>
 

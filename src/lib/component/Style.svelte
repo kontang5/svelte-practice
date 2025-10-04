@@ -1,6 +1,6 @@
 <script lang="ts">
     import LogoComponent from "./SvelteLogo.svelte";
-    import Logo from "../assets/svelte.svg";
+    import Logo from "../../assets/svelte.svg";
 
     let active: boolean = true;
     let theme: "light" | "dark" = "light";
