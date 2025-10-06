@@ -1,96 +1,125 @@
 <script lang="ts">
-    let todos: string[] = [];
+    let message = "";
+    let value = "";
 
-    function handleClick() {
-        // todos.push("new Task");
-        // todos = todos;
-        todos = [...todos, "new Task"];
+    function handleInput() {
+        alert(`'${message}'is detected`);
+        alert(`'${value}'is detected`);
+        message = "";
     }
 
-    let range = {min: 0, max: 10};
-    let values: number[] = [];
+    const taxRate = 0.1;
+    let price = 100;
+    $: priceWithTax = Math.floor(price * (1 + taxRate));
 
-    $: {
-        const newValues = [];
-        for (let i = range.min; i <= range.max; i++) {
-            newValues.push(i);
-        }
-        values = newValues;
-    }
+    let isAccepted = false;
 
-    function handleMinChange(event) {
-        range.min = parseInt(event.target.value);
-    }
+    // variable binding to radio buttons
+    let size = 'M';
 
-    function handleMaxChange(event) {
-        range.max = parseInt(event.target.value);
-    }
+    // variable binding to checkboxes
+    let options = [];
 
-    // Can't detect state changes
-    let setting1 = {volume: {value: 50},
-    };
+    let aspect = 1 / 1;
 
-    function updateVolume(diff: number) {
-        const volume = setting1.volume;
-        // The left side doesn't have a variable `setting`.
-        volume.value += diff;
-    }
-
-    function handleReset() {
-        // passing variables as argument
-        resetVolume({args: setting1});
-    }
-
-    function resetVolume({args}: { args: any }) {
-        args.volume = {value: 50};
-    }
-
-    let setting2 = {
-        volume: {value: 50},
-    }
-
-    function updateVolume2(diff: number) {
-        // Directly referencing variable `setting2`
-        setting2.volume.value += diff;
-    }
-    function handleReset2() {
-        resetVolume2();
-    }
-    function resetVolume2() {
-        // Directly update variable `setting2`
-        setting2.volume = {value: 50};
-    }
 </script>
 
-<ul>
-    {#each todos as todo}
-        <li>{todo}</li>
-    {/each}
-</ul>
-<button on:click={handleClick}>Add Task</button>
-
-<div>
-    <input max={range.max} min={0} on:change={handleMinChange} type="number" value={range.min}>
-    <input max={100} min={range.min} on:change={handleMaxChange} type="number" value={range.max}>
-</div>
-{#each values as value}
-    <button>{value}</button>
-{/each}
-
-<div>
-    Volume: {setting1.volume.value}%
-</div>
-
-<button on:click={() => updateVolume(-10)}>Decrease</button>
-<button on:click={() => updateVolume(10)}>Increase</button>
-<button on:click={handleReset}>Reset</button>
+<input bind:value={message} type="text">
+<input bind:value type="text">
+<button on:click={handleInput}>Detect</button>
 
 <hr>
 
+<div>Price: $<input bind:value={price} type="number"></div>
+<div>Price with tax: ${priceWithTax}</div>
+
+<hr>
+
+<label>
+    <input bind:checked={isAccepted} type="checkbox">Agree
+</label>
 <div>
-    Volume: {setting2.volume.value}%
+    <button disabled={!isAccepted}>Submit</button>
 </div>
 
-<button on:click={() => updateVolume2(-10)}>Decrease</button>
-<button on:click={() => updateVolume2(10)}>Increase</button>
-<button on:click={handleReset2}>Reset</button>
+<hr>
+
+<h4>Size</h4>
+<label>
+    <input bind:group={size} type="radio" value="S">
+    Size: small
+</label>
+<label>
+    <input bind:group={size} type="radio" value="M">
+    size: medium
+</label>
+<label>
+    <input bind:group={size} type="radio" value="L">
+    size: large
+</label>
+
+<h4>Toppings</h4>
+<label>
+    <input bind:group={options} type="checkbox" value="Pepperoni">
+    Pepperoni
+</label>
+<label>
+    <input bind:group={options} type="checkbox" value="cheese">
+    Extra cheese
+</label>
+<label>
+    <input bind:group={options} type="checkbox" value="mushroom">
+    Mushroom
+</label>
+
+<button>
+    Size: {size}
+    {#if options.length > 0}
+        (Toppings: {options.join(', ')})
+    {/if}
+    Checkout
+</button>
+
+<hr>
+
+<label>
+    <input bind:group={aspect} type="radio" value={1 / 1}>
+    1 : 1
+</label>
+<label>
+    <input bind:group={aspect} type="radio" value={4 / 3}>
+    4 : 3
+</label>
+<label>
+    <input bind:group={aspect} type="radio" value={16 / 9}>
+    16 : 9
+</label>
+<div style="width: 300px" style:height="{300 / aspect}px" style:background="gray">
+</div>
+
+<hr>
+
+<select bind:value={size}>
+    <option value="S">Small</option>
+    <option value="M">Medium</option>
+    <option value="L">Large</option>
+</select>
+
+<button>{size} Size order</button>
+
+<hr>
+
+<select multiple bind:value={options}>
+    <option value="Pepperoni">Pepperoni</option>
+    <option value="cheese">Extra cheese</option>
+    <option value="mushroom">Mushroom</option>
+</select>
+
+<div>
+    Toppings:
+    {#if options.length > 0}
+    {options.join(', ')}
+    {:else}
+    None
+    {/if}
+</div>
