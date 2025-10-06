@@ -1,9 +1,13 @@
 <script>
-    import CustomSelect from "./lib/reactivity/CustomSelect.svelte";
+    import CustomForm from "./lib/reactivity/CustomForm.svelte";
 
-    let fruit = "apple";
+    let customForm;
+
+    function handleClick() {
+        customForm.reset();
+    }
 </script>
 
-<div>Choosing: {fruit}</div>
+<CustomForm bind:this={customForm} />
 
-<CustomSelect bind:selected={fruit} options={["apple", "banana", "orange"]} />
+<button on:click={handleClick}>Reset</button>
